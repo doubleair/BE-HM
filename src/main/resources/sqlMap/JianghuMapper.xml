@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="jianghu">
+	<resultMap type="dataObject.JianghuDO" id="JianghuResult">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="typeId" column="type_id" jdbcType="BIGINT"/>
+        <result property="site" column="site" jdbcType="VARCHAR"/>
+        <result property="cnName" column="cn_name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="sql_jianghu_select">
+        <![CDATA[
+            SELECT
+                 ID,GMT_CREATE,GMT_MODIFIED,TYPE_ID,SITE,CN_NAME,DESCRIPTION,OPEN_ID
+            FROM jianghu
+        ]]>
+    </sql>
+    
+    <sql id="sql_where_list_jianghu">
+    	<where>
+    		<if test="id != null">
+    			and ID=#{id}
+    		</if>
+    		<if test="typeId != null">
+    			and TYPE_ID=#{typeId}
+    		</if>
+    		<if test="cnName != null">
+    			and CN_NAME=#{cnName}
+    		</if>
+    		<if test="openId != null">
+    			and OPEN_ID=#{openId}
+    		</if>
+    	</where>
+    </sql>
+    
+    <insert id="jianghu_create" parameterType="java.util.Map">
+         INSERT INTO jianghu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != '' ">
+                id,
+            </if>
+            <if test="typeId != null and typeId != '' ">
+                type_id,
+            </if>
+            <if test="site != null and site != '' ">
+                site,
+            </if>
+            <if test="cnName != null and cnName != '' ">
+                cn_name,
+            </if>
+            <if test="description != null and description != '' ">
+                description,
+            </if>
+            <if test="openId != null and openId != '' ">
+                open_id,
+            </if>
+            gmt_create,gmt_modified
+        </trim>
+        
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        	<if test="id != null and id != '' ">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="typeId != null and typeId != '' ">
+                #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="site != null and site != '' ">
+                #{site,jdbcType=VARCHAR},
+            </if>
+            <if test="cnName != null and cnName != '' ">
+                #{cn_name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null and description != '' ">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null and openId != '' ">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            now(),now()
+        </trim>
+    </insert>
+    
+    <update id="jianghu_update_partial" parameterType="java.util.Map">
+        UPDATE 
+        	jianghu
+        <set>
+        	gmt_modified = now()
+        	<if test="this.typeId != null and this.typeId != '' ">
+                ,site = #{this.typeId,jdbcType=BIGINT}
+            </if>
+            <if test="this.site != null and this.site != '' ">
+                ,cn_name = #{this.site,jdbcType=VARCHAR}
+            </if>
+            <if test="this.cnName != null and this.cnName != '' ">
+                ,cn_name = #{this.cnName,jdbcType=VARCHAR}
+            </if>
+            <if test="this.description != null and this.description != '' ">
+                ,description = #{this.description,jdbcType=VARCHAR}
+            </if>
+            <if test="this.openId != null and this.openId != '' ">
+                ,open_id = #{this.openId,jdbcType=VARCHAR}
+            </if>
+        </set>
+        
+        WHERE 
+        	id = #{this.id,jdbcType=BIGINT};
+  	</update>
+    
+    <select id="jianghu_find_by_param" parameterType="java.util.Map" resultMap="JianghuResult">
+        <include refid="sql_jianghu_select"/>
+        <include refid="sql_where_list_jianghu"/>
+    </select>
+    
+    
+</mapper>

@@ -10,11 +10,17 @@
                         http://www.springframework.org/schema/mvc    
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">  
     
-    <mvc:annotation-driven/>  
+    
+    
+    
+    <mvc:annotation-driven/>
+    <!--<context:component-scan base-package="org.springframework.web.filter.DelegatingFilterProxy"/>-->
     <!-- 扫描controller（controller层注入） -->  
     <context:component-scan base-package="controller"/>
     <context:component-scan base-package="service"/>
     <context:component-scan base-package="dao"/>
+    <context:component-scan base-package="mapper"/>
+    
      
    <!--<context:component-scan base-package="controller"/>
    <context:component-scan base-package="com.henry.blog"/>  -->  
@@ -50,6 +56,8 @@
         <property name="maxUploadSize" value="10485760000" />    
         <!-- 内存中的最大值 -->  
         <property name="maxInMemorySize" value="40960" />    
-    </bean>   
+    </bean>
     
+    
+	
 </beans>  

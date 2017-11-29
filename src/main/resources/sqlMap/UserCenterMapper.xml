@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="user_center">
+	<resultMap type="dataObject.UserCenterDO" id="UserCenterResult">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="TINYINT"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="sql_user_center_select">
+        <![CDATA[
+            SELECT
+                 ID,GMT_CREATE,GMT_MODIFIED,NICK_NAME,GENDER,CITY,PROVINCE,COUNTRY,AVATAR_URL,OPEN_ID
+            FROM user_center
+        ]]>
+    </sql>
+    
+    <sql id="sql_where_list_user_center">
+    	<where>
+    		<if test="id != null">
+    			and ID=#{id}
+    		</if>
+    		<if test="nickName != null">
+    			and NICK_NAME=#{nickName}
+    		</if>
+    		<if test="gender != null">
+    			and GENDER=#{gender}
+    		</if>
+    		<if test="city != null">
+    			and CITY=#{city}
+    		</if>
+    		<if test="province != null">
+    			and PROVINCE=#{province}
+    		</if>
+    		<if test="country != null">
+    			and COUNTRY=#{country}
+    		</if>
+    		<if test="avatarUrl != null">
+    			and AVATAR_URL=#{avatarUrl}
+    		</if>
+    		<if test="openId != null">
+    			and OPEN_ID=#{openId}
+    		</if>
+    	</where>
+    </sql>
+    
+    <insert id="user_center_create" parameterType="java.util.Map">
+         INSERT INTO user_center
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != '' ">
+                id,
+            </if>
+            <if test="nickName != null and nickName != '' ">
+                nick_name,
+            </if>
+            <if test="gender != null and gender != '' ">
+                gender,
+            </if>
+            <if test="city != null and city != '' ">
+                city,
+            </if>
+            <if test="province != null and province != '' ">
+                province,
+            </if>
+            <if test="country != null and country != '' ">
+                country,
+            </if>
+            <if test="avatarUrl != null and avatarUrl != '' ">
+                avatar_url,
+            </if>
+            <if test="openId != null and openId != '' ">
+                open_id,
+            </if>
+            gmt_create,gmt_modified
+        </trim>
+        
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        	<if test="id != null and id != '' ">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="nickName != null and nickName != '' ">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null and gender != '' ">
+                #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="city != null and city != '' ">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null and province != '' ">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null and country != '' ">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarUrl != null and avatarUrl != '' ">
+                #{avatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null and openId != '' ">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            now(),now()
+        </trim>
+    </insert>
+    
+    <select id="user_center_find_by_param" parameterType="java.util.Map" resultMap="UserCenterResult">
+        <include refid="sql_user_center_select"/>
+        <include refid="sql_where_list_user_center"/>
+    </select>
+    
+    <select id="user_center_find_by_id" parameterType="java.lang.Long" resultMap="UserCenterResult">
+        <include refid="sql_user_center_select"/>
+        where id=#{id}
+    </select>
+    
+    
+    
+    
+</mapper>

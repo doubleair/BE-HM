@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="jianghu_constant">
+	<resultMap type="dataObject.JianghuConstantDO" id="JianghuConstantResult">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="category" column="category" jdbcType="VARCHAR"/>
+        <result property="cnName" column="cn_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="sql_jianghu_constant_select">
+        <![CDATA[
+            SELECT
+                 ID,GMT_CREATE,GMT_MODIFIED,CATEGORY,CN_NAME,NAME
+            FROM mark_constant
+        ]]>
+    </sql>
+    
+    <sql id="sql_where_list_jianghu_constant">
+    	<where>
+    		<if test="id != null">
+    			and ID=#{id}
+    		</if>
+    		<if test="category != null">
+    			and CATEGORY=#{category}
+    		</if>
+    		<if test="cnName != null">
+    			and CN_NAME=#{cnName}
+    		</if>
+    		<if test="name != null">
+    			and NAME=#{name}
+    		</if>
+    	</where>
+    </sql>
+    
+    <select id="jianghu_constant_find_by_param" parameterType="java.util.Map" resultMap="JianghuConstantResult">
+        <include refid="sql_jianghu_constant_select"/>
+        <include refid="sql_where_list_jianghu_constant"/>
+    </select>
+    
+</mapper>

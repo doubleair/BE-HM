@@ -3,15 +3,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
     xmlns:context="http://www.springframework.org/schema/context"  
     xmlns:mvc="http://www.springframework.org/schema/mvc"  
-    xmlns:util="http://www.springframework.org/schema/util"
     xsi:schemaLocation="http://www.springframework.org/schema/beans    
                         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
                         http://www.springframework.org/schema/context    
                         http://www.springframework.org/schema/context/spring-context-3.1.xsd    
                         http://www.springframework.org/schema/mvc    
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-                        http://www.springframework.org/schema/util
-        				http://www.springframework.org/schema/util/spring-util.xsd">  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">  
     <!-- 自动扫描 <context:component-scan base-package="*" />  -->  
     <!-- <context:component-scan base-package="org.springframework.web.filter.DelegatingFilterProxy"/>  -->
     <!-- 引入配置文件 -->  
@@ -42,12 +39,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
         <!-- 自动扫描mapping.xml文件 -->  
-        <property name="mapperLocations" value="classpath:sqlMap/*.xml"></property>  
+        <!-- <property name="mapperLocations" value="classpath:sqlMap/*.xml"></property> -->  
     </bean>  
-    
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSessionFactory"/>
-    </bean>
   
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->  
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
@@ -76,9 +69,8 @@
 	    <!--<property name="hostName" value="${redis_hostname}"/>
 	    <property name="port" value="${redis_port}"/>
 	    <property name="password" value="${redis_pwd}" />  -->
-	    <property name="hostName" value="123.206.102.229"/>
+	    <property name="hostName" value="127.0.0.1"/>
 	    <property name="port" value="6379"/>
-	    <property name="password" value="1123234555432"/>
 	    
 	    <property name="timeout" value="3000"/>
 	    <property name="usePool" value="true"/>
@@ -88,7 +80,5 @@
    	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">  
         <property name="connectionFactory"   ref="jedisConnectionFactory" />  
     </bean> 
-    
-    <util:constant static-field="org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP"/>
   
 </beans>  
